@@ -48,7 +48,7 @@ static const struct device *hex_uart = DEVICE_DT_GET(DT_ALIAS(umd_hex_uart));
 static const struct device *console_uart = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
 
 static const struct gpio_dt_spec status_led =
-	GPIO_DT_SPEC_GET(DT_NODELABEL(status_led), gpios);
+	GPIO_DT_SPEC_GET(DT_ALIAS(led0), gpios);
 
 static void dispatch_usb_line(const char *line)
 {

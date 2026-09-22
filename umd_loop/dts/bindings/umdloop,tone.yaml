@@ -1,0 +1,28 @@
+description: UMD Loop tone/buzzer with optional ADC duration sensor
+
+compatible: "umdloop,tone"
+
+include: base.yaml
+
+properties:
+  pwms:
+    type: phandle-array
+    required: true
+    description: PWM channel used to generate the square-wave tone
+
+  io-channels:
+    type: phandle-array
+    required: false
+    description: Optional ADC channel for duration mapping (E1 System 3)
+
+  min-duration-ms:
+    type: int
+    required: false
+    default: 200
+    description: Tone duration at minimum ADC reading
+
+  max-duration-ms:
+    type: int
+    required: false
+    default: 2000
+    description: Tone duration at maximum ADC reading

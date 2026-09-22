@@ -1,0 +1,18 @@
+# Copyright (c) 2026 UMD Loop
+# SPDX-License-Identifier: Apache-2.0
+
+config UMD_LOOP_TONE
+	bool "UMD Loop tone / buzzer driver"
+	default y
+	depends on PWM
+	depends on DT_HAS_UMDLOOP_TONE_ENABLED
+	help
+	  PWM square-wave tone with optional ADC duration mapping.
+
+if UMD_LOOP_TONE
+
+config UMD_LOOP_TONE_INIT_PRIORITY
+	int "Tone init priority"
+	default 70
+
+endif

@@ -1,0 +1,123 @@
+/*
+ * App-local overlay (west picks up app/boards/<board>.overlay automatically).
+ * Content mirrors ../boards/esp32_devkitc_wroom.overlay
+ */
+
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/pwm/pwm.h>
+#include <zephyr/dt-bindings/adc/adc.h>
+#include <zephyr/dt-bindings/i2c/i2c.h>
+
+/ {
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+	};
+
+	aliases {
+		umd-rgb = &umd_rgb;
+		umd-servo = &umd_servo;
+		umd-tone = &umd_tone;
+		umd-hex-uart = &uart1;
+		status-led = &status_led_gpio;
+	};
+
+	umd_rgb: rgb-led {
+		compatible = "umdloop,rgb-led";
+		red-gpios = <&gpio0 25 GPIO_ACTIVE_HIGH>;
+		green-gpios = <&gpio0 14 GPIO_ACTIVE_HIGH>;
+		blue-gpios = <&gpio0 27 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
+
+	umd_servo: servo {
+		compatible = "umdloop,servo-pwm";
+		pwms = <&ledc0 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+		min-pulse-us = <500>;
+		max-pulse-us = <2000>;
+		status = "okay";
+	};
+
+	umd_tone: tone {
+		compatible = "umdloop,tone";
+		pwms = <&ledc0 1 PWM_HZ(1000) PWM_POLARITY_NORMAL>;
+		io-channels = <&adc1 6>;
+		min-duration-ms = <200>;
+		max-duration-ms = <2000>;
+		status = "okay";
+	};
+
+	status_led_gpio: status-led {
+		compatible = "gpio-leds";
+		status_led: led_2 {
+			gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
+			label = "Status LED";
+		};
+	};
+};
+
+&pinctrl {
+	uart1_default: uart1_default {
+		group1 {
+			pinmux = <UART1_TX_GPIO33>,
+				 <UART1_RX_GPIO16>;
+		};
+	};
+
+	ledc0_default: ledc0_default {
+		group1 {
+			pinmux = <LEDC_CH0_GPIO13>,
+				 <LEDC_CH1_GPIO26>;
+		};
+	};
+};
+
+&uart0 {
+	status = "okay";
+	current-speed = <115200>;
+};
+
+&uart1 {
+	status = "okay";
+	current-speed = <9600>;
+	pinctrl-0 = <&uart1_default>;
+	pinctrl-names = "default";
+};
+
+&ledc0 {
+	pinctrl-0 = <&ledc0_default>;
+	pinctrl-names = "default";
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	channel0@0 {
+		reg = <0x0>;
+		timer = <0>;
+	};
+
+	channel1@1 {
+		reg = <0x1>;
+		timer = <1>;
+	};
+};
+
+&adc1 {
+	status = "okay";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	channel@6 {
+		reg = <6>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+	};
+};
+
+&i2c0 {
+	status = "okay";
+	clock-frequency = <I2C_BITRATE_STANDARD>;
+};

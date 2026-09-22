@@ -1,0 +1,18 @@
+# Copyright (c) 2026 UMD Loop
+# SPDX-License-Identifier: Apache-2.0
+
+config UMD_LOOP_COMMS
+	bool "UMD Loop comms helpers (HEX UART / USB / I2C / status LED)"
+	default y
+	depends on SERIAL
+	help
+	  Protocol helpers for HEX color lines, UART readline, status blink,
+	  and I2C message queue put.
+
+if UMD_LOOP_COMMS
+
+config UMD_LOOP_COMMS_INIT_PRIORITY
+	int "Comms library init priority (unused for library-only)"
+	default 70
+
+endif

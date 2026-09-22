@@ -1,0 +1,23 @@
+description: UMD Loop hobby servo driven by PWM
+
+compatible: "umdloop,servo-pwm"
+
+include: base.yaml
+
+properties:
+  pwms:
+    type: phandle-array
+    required: true
+    description: PWM channel for the servo control signal (50 Hz)
+
+  min-pulse-us:
+    type: int
+    required: false
+    default: 500
+    description: Pulse width in microseconds for 0 degrees
+
+  max-pulse-us:
+    type: int
+    required: false
+    default: 2000
+    description: Pulse width in microseconds for 180 degrees

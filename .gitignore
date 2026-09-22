@@ -1,0 +1,26 @@
+# E1 Arduino sketches (reference only — E2 does not need them to build)
+hexanypin.ino
+hex_sender_uno.ino
+E1_System_2
+E1 System 3
+I2C_receiver
+I2C_sender
+USB_comm
+
+# Zephyr / west build artifacts
+**/build/
+**/twister-out*/
+.west/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+.venv/

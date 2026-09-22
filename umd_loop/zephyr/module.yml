@@ -1,0 +1,6 @@
+name: umd_loop
+build:
+  cmake: .
+  kconfig: Kconfig
+  settings:
+    dts_root: .

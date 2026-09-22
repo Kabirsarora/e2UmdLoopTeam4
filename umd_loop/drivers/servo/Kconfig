@@ -1,0 +1,18 @@
+# Copyright (c) 2026 UMD Loop
+# SPDX-License-Identifier: Apache-2.0
+
+config UMD_LOOP_SERVO
+	bool "UMD Loop servo PWM driver"
+	default y
+	depends on PWM
+	depends on DT_HAS_UMDLOOP_SERVO_PWM_ENABLED
+	help
+	  Hobby servo driver (50 Hz PWM, 500-2000 us pulse).
+
+if UMD_LOOP_SERVO
+
+config UMD_LOOP_SERVO_INIT_PRIORITY
+	int "Servo init priority"
+	default 70
+
+endif

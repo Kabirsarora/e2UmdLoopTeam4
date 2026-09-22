@@ -1,0 +1,18 @@
+# Copyright (c) 2026 UMD Loop
+# SPDX-License-Identifier: Apache-2.0
+
+config UMD_LOOP_RGB_LED
+	bool "UMD Loop RGB LED driver"
+	default y
+	depends on GPIO
+	depends on DT_HAS_UMDLOOP_RGB_LED_ENABLED
+	help
+	  Discrete RGB LED driver (three GPIOs, nearest-primary helper).
+
+if UMD_LOOP_RGB_LED
+
+config UMD_LOOP_RGB_LED_INIT_PRIORITY
+	int "RGB LED init priority"
+	default 70
+
+endif
